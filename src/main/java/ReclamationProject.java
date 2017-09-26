@@ -1,4 +1,4 @@
-/*
+/**
  * The following code needs a lot of TLC. So give it some!
  *
  * 1. Fix all checkstyle errors
@@ -7,20 +7,52 @@
  * 4. Add comments and Javadoc comments where needed
  * 5. Remove unnecessary comments as appropriate
  */
+public class ReclamationProject {
 
-public class ReclamationProject
-{
-    static String doit(String a,String b){
-        if (a.length() > b.length()){
-            String c = a; // TODO: set c to a
-            a=b; b=c;}
-        String r = (a.equals(b)) ? "" : ""; // I love the ternary operator!
-        /*
-         * For loop with i
-         */
-        for (int i = 0; i < a.length(); i++) { for (int j = a.length() - i; j > 0; j--) {
-                for (int k = 0; k < b.length()- j; k++) {
-                    r = (a.regionMatches(i, b, k, j) && j >r.length()) ? a.substring(i,i + j) : r; // Do it!
-                        }} // Ah yeah
-        } return r; }
+    /**
+     * @param unused unused
+     */
+    public static void main(final String[] unused) {
+        String str1 = "asdThis is a string";
+        String str2 = "This is also a string";
+        String matchingSection = getFirstMatchingSection(str1, str2);
+        System.out.println(matchingSection);
+    }
+
+    /**
+     * @param a A string
+     * @param b A second string
+     * @return The first instance of a matching section of two strings
+     */
+    private static String getFirstMatchingSection(final String a, final String b) {
+
+        if (a.contentEquals(b)) {
+            return a;
+        }
+
+        String str1 = a, str2 = b;
+
+        if (str1.length() > str2.length()) {
+            String temp = str1;
+            str1 = str2;
+            str2 = temp;
+        }
+
+        String matching = "";
+
+        for (int mainInd = 0; mainInd < str1.length(); mainInd++) {
+
+            for (int subEndInd = str1.length() - mainInd; subEndInd > 0; subEndInd--) {
+
+                for (int subStartInd = 0; subStartInd < str2.length() - subEndInd; subStartInd++) {
+
+                    if (str1.regionMatches(mainInd, str2, subStartInd, subEndInd)
+                            && matching.length() < subEndInd) {
+                        matching = str1.substring(mainInd, mainInd + subEndInd);
+                    }
+                }
+            }
+        }
+        return matching;
+    }
 }
