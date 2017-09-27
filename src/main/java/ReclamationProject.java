@@ -13,8 +13,8 @@ public class ReclamationProject {
      * @param unused unused
      */
     public static void main(final String[] unused) {
-        String str1 = "asdThis is a string";
-        String str2 = "This is also a string";
+        String str1 = "asdf";
+        String str2 = "asdf";
         String matchingSection = getFirstMatchingSection(str1, str2);
         System.out.println(matchingSection);
     }
@@ -26,29 +26,29 @@ public class ReclamationProject {
      */
     private static String getFirstMatchingSection(final String a, final String b) {
 
-        if (a.contentEquals(b)) {
+        if (a.equals(b)) {
             return a;
         }
 
-        String str1 = a, str2 = b;
+        String shortStr = a, longStr = b;
 
-        if (str1.length() > str2.length()) {
-            String temp = str1;
-            str1 = str2;
-            str2 = temp;
+        if (shortStr.length() > longStr.length()) {
+            String temp = shortStr;
+            shortStr = longStr;
+            longStr = temp;
         }
 
         String matching = "";
 
-        for (int mainInd = 0; mainInd < str1.length(); mainInd++) {
+        for (int mainInd = 0; mainInd < shortStr.length(); mainInd++) {
 
-            for (int subEndInd = str1.length() - mainInd; subEndInd > 0; subEndInd--) {
+            for (int endInd = shortStr.length() - mainInd; endInd > 0; endInd--) {
 
-                for (int subStartInd = 0; subStartInd < str2.length() - subEndInd; subStartInd++) {
+                for (int startInd = 0; startInd < longStr.length() - endInd; startInd++) {
 
-                    if (str1.regionMatches(mainInd, str2, subStartInd, subEndInd)
-                            && matching.length() < subEndInd) {
-                        matching = str1.substring(mainInd, mainInd + subEndInd);
+                    if (shortStr.regionMatches(mainInd, longStr, startInd, endInd)
+                            && matching.length() < endInd) {
+                        matching = shortStr.substring(mainInd, mainInd + endInd);
                     }
                 }
             }
